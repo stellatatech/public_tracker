@@ -60,7 +60,7 @@
         };
         fetch(endpoint, {
             method: 'POST',
-            body: JSON.stringify({ payload: payload }),
+            body: JSON.stringify({ ...payload }),
             headers: { 'Content-Type': 'application/json' }
         })
             .then(function (res) { return res.text(); })["catch"](function (error) { return error; });
