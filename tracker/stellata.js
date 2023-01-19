@@ -19,7 +19,6 @@
     var listeners = {};
     var currentUrl = "".concat(pathname).concat(search);
     var currentRef = document.referrer;
-    // Determine if the user has tracking disabled
     var trackingEnabled = function () {
         var doNotTrack = window.doNotTrack, navigator = window.navigator, external = window.external;
         var msTrackProtection = "msTrackingProtectionEnabled";
