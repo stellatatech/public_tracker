@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Author(s): azazelm3dj3d (https://github.com/azazelm3dj3d)
-# License: MIT
-# Stellata (c) 2022 - 2023
+# Author: azazelm3dj3d (https://github.com/azazelm3dj3d)
+# License: GPL-v3
+# Stellata (c) 2023
 
 # Path to the tracker and builds
 TRACKER="src/stellata.ts"

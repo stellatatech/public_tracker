@@ -1,3 +1,10 @@
+/*
+  Authors: azazelm3dj3d (https://github.com/azazelm3dj3d), Jake Roseboro (https://github.com/jakeroseboro)
+  License: GPL-v3
+  
+  Stellata (c) 2023
+*/
+
 ((window: Window) => {
   const {
     screen: { width, height },
