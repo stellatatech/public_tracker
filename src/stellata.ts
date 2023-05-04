@@ -1,3 +1,10 @@
+/*
+  Authors: azazelm3dj3d (https://github.com/azazelm3dj3d), Jake Roseboro (https://github.com/jakeroseboro)
+  License: GPL-v3
+  
+  Stellata (c) 2023
+*/
+
 ((window: Window) => {
   const {
     screen: { width, height },
@@ -75,17 +82,17 @@
 
   const collect = (eventType: string | undefined) => {
     if (!trackingEnabled()) return;
-    if(website === null) return;
-    if(eventType === undefined) return;
+    if (website === null) return;
+    if (eventType === undefined) return;
 
-    const payload : payload = {
-        eventType,
-        websiteId: website,
-        hostname,
-        screen,
-        language,
-        url: currentUrl,
-        referrer: currentRef
+    const payload: payload = {
+      eventType,
+      websiteId: website,
+      hostname,
+      screen,
+      language,
+      url: currentUrl,
+      referrer: currentRef
     }
 
     fetch(endpoint, {
@@ -93,8 +100,8 @@
       body: JSON.stringify({ payload }),
       headers: { 'Content-Type': 'application/json' }
     })
-    .then((res) => {return res.text();})
-    .catch((error) => {return error})
+      .then((res) => { return res.text(); })
+      .catch((error) => { return error })
   };
 
   const addEvents = (node: Document) => {
@@ -106,38 +113,38 @@
         if (!eventClass.test(className)) return;
 
         const [, event, name] = className.split("--");
-        if(event === undefined || name === undefined) return;
+        if (event === undefined || name === undefined) return;
 
         const listener = listeners[className]
           ? listeners[className]
           : (listeners[className] = (e: {
-              ctrlKey: any;
-              shiftKey: any;
-              metaKey: any;
-              button: number;
-              preventDefault: () => void;
-            }) => {
-              if (
-                event === "click" &&
-                element.tagName === "A" &&
-                !(
-                  e.ctrlKey ||
-                  e.shiftKey ||
-                  e.metaKey ||
-                  (e.button && e.button === 1) ||
-                  get("target")
-                )
-              ) {
-                e.preventDefault();
-                collect(name)
-                const href = get("href");
-                if (href) {
-                    location.href = href;
-                }
-              } else {
-                collect(name);
+            ctrlKey: any;
+            shiftKey: any;
+            metaKey: any;
+            button: number;
+            preventDefault: () => void;
+          }) => {
+            if (
+              event === "click" &&
+              element.tagName === "A" &&
+              !(
+                e.ctrlKey ||
+                e.shiftKey ||
+                e.metaKey ||
+                (e.button && e.button === 1) ||
+                get("target")
+              )
+            ) {
+              e.preventDefault();
+              collect(name)
+              const href = get("href");
+              if (href) {
+                location.href = href;
               }
-            });
+            } else {
+              collect(name);
+            }
+          });
 
         element.addEventListener(event, listener, true);
       });
@@ -160,14 +167,14 @@
     const orig = method === 'pushState' ? _this.pushState : _this.replaceState;
 
     return (...args: any) => {
-        
+
       handlePush(...args);
 
       return orig.apply(_this, args);
     };
   };
 
-  const handlePush = (...args:any) => {
+  const handlePush = (...args: any) => {
     if (!args.url) return;
 
     currentRef = currentUrl;
@@ -193,23 +200,23 @@
 
   if (trackingEnabled()) {
     history.pushState = hook(history, 'pushState');
-      history.replaceState = hook(history, 'replaceState');
-  
-      const update = () => {
-        if (document.readyState === 'complete') {
-          collect('pageView');
-  
-          if (cssEvents) {
-            addEvents(document);
-            observeDocument();
-          }
+    history.replaceState = hook(history, 'replaceState');
+
+    const update = () => {
+      if (document.readyState === 'complete') {
+        collect('pageView');
+
+        if (cssEvents) {
+          addEvents(document);
+          observeDocument();
         }
-      };
-  
-      document.addEventListener('readystatechange', update, true);
-  
-      update();
+      }
+    };
+
+    document.addEventListener('readystatechange', update, true);
+
+    update();
   }
 })(window);
 
-export{}
+export { }
