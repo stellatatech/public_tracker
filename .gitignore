@@ -1,8 +1,5 @@
 # npm
 node_modules/
 
-# Custom script
-_build/
-
 # macOS
 .DS_Store
